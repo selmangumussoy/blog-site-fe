@@ -1,6 +1,9 @@
-import './assets/main.css'
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router"; // Router'ı bağlayın
 
-import { createApp } from 'vue'
-import App from './App.vue'
 
-createApp(App).mount('#app')
+const app = createApp(App);
+
+app.use(router); // Router'ı kullan
+app.mount("#app"); // Uygulamayı bağla

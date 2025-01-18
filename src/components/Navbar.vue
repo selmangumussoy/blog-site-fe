@@ -1,46 +1,91 @@
 <template>
   <nav class="navbar">
-    <div class="container">
-      <router-link to="/" class="logo">BlogSite</router-link>
-      <ul class="nav-links">
-        <li><router-link to="/">Home</router-link></li>
-        <li v-if="!isLoggedIn"><router-link to="/login">Login</router-link></li>
-        <li v-if="isLoggedIn">
-          <button @click="logout">Logout</button>
-        </li>
-      </ul>
+    <div class="navbar-content">
+      <!-- Sol: Logo -->
+      <div class="logo">
+        <img src="/logo.svg" alt="Logo" class="logo-icon" />
+      </div>
+
+      <!-- Ortada: Arama Çubuğu -->
+      <div class="search-bar">
+        <input type="text" placeholder="Search" class="search-input" />
+      </div>
+
+      <!-- Sağ: Write ve Profil -->
+      <div class="navbar-actions">
+        <button class="write-btn">Write</button>
+        <div class="profile-icon">
+          <img src="/logo.svg" alt="Profile" />
+        </div>
+      </div>
     </div>
   </nav>
 </template>
 
 <script>
-import { useAuthStore } from "@/store/auth";
-
-export default {
-  computed: {
-    isLoggedIn() {
-      const authStore = useAuthStore();
-      return !!authStore.token;
-    },
-  },
-  methods: {
-    logout() {
-      const authStore = useAuthStore();
-      authStore.logout();
-    },
-  },
-};
+export default {};
 </script>
 
 <style scoped>
+/* Navbar */
 .navbar {
-  background-color: #333;
-  color: white;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
   padding: 10px 20px;
+  display: flex;
+  justify-content: center;
 }
-.nav-links a {
-  color: white;
-  margin-right: 10px;
-  text-decoration: none;
+
+.navbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Logo */
+.logo-icon {
+  height: 40px;
+}
+
+/* Arama Çubuğu */
+.search-bar {
+  flex: 1;
+  margin: 0 20px;
+  max-width: 300px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Write ve Profil */
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.write-btn {
+  padding: 8px 12px;
+  background-color: #0073e6;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.write-btn:hover {
+  background-color: #005bb5;
+}
+
+.profile-icon img {
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 </style>
