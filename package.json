@@ -9,16 +9,24 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@primevue/themes": "^4.2.5",
     "axios": "^1.7.9",
+    "chart.js": "^4.4.7",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.2.5",
+    "tailwindcss-primeui": "^0.4.0",
+    "unplugin-vue-components": "^28.1.0",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
+    "@primevue/auto-import-resolver": "^4.2.5",
     "@vitejs/plugin-vue": "^5.2.1",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.5.1",
+    "sass-embedded": "^1.85.0",
     "tailwindcss": "^3.4.17",
-    "vite": "^6.0.5",
+    "vite": "6.0.9",
     "vite-plugin-vue-devtools": "^7.6.8"
   }
 }
