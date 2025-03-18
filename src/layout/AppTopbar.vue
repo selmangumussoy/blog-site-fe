@@ -30,9 +30,11 @@ const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
                     </g>
                 </svg>
 
-                <span>SAKAI</span>
+                <span>ASIM'IN NESLİ</span>
             </router-link>
         </div>
+
+      <div></div>
 
         <div class="layout-topbar-actions">
             <div class="layout-config-menu">

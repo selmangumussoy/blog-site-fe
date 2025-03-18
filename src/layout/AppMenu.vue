@@ -65,6 +65,16 @@ const model = ref([
                 to: '/pages/crud'
             },
             {
+                label: 'Blog',
+                icon: 'pi pi-fw pi-pencil',
+                to: '/pages/blog'
+            },
+            {
+                label: 'Tag',
+                icon: 'pi pi-fw pi-pencil',
+                to: '/pages/tag'
+            },
+            {
                 label: 'Not Found',
                 icon: 'pi pi-fw pi-exclamation-circle',
                 to: '/pages/notfound'
