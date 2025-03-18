@@ -3,9 +3,6 @@ import { onMounted, ref } from 'vue';
 import { TagService } from '@/service/TagService.js';
 import { useToast } from 'primevue/usetoast';
 
-onMounted(() => {
-  TagService.getTags().then((data) => (tags.value = data));
-});
 
 const toast = useToast();
 const tags = ref([]);
@@ -51,8 +48,14 @@ function editTag(selectedTag) {
 }
 
 function confirmDeleteTag(selectedTag) {
-  tag.value = selectedTag;
-  deleteTagDialog.value = true;
+    console.log("Selected tag:", selectedTag); // Seçilen tag'ı konsola yazdır
+    if (!selectedTag || !selectedTag.id) {
+        console.error("Error: Selected tag has no ID!");
+        return;
+    }
+
+    tag.value = selectedTag;
+    deleteTagDialog.value = true;
 }
 
 function deleteTag() {
@@ -63,6 +66,16 @@ function deleteTag() {
     toast.add({severity: 'success', summary: 'Success', detail: 'Tag Deleted', life: 3000});
   });
 }
+
+onMounted(() => {
+    TagService.getTags().then((data) => {
+        if (data?.data?.items) {
+            tags.value = data.data.items;
+        }
+    }).catch(error => {
+        console.error("Failed to fetch tags:", error);
+    });
+});
 </script>
 
 <template>
@@ -74,16 +87,16 @@ function deleteTag() {
         </template>
       </Toolbar>
 
-      <DataTable :value="tags" dataKey="id">
-        <Column field="name" header="Name" sortable></Column>
-        <Column field="description" header="Description" sortable></Column>
-        <Column>
-          <template #body="slotProps">
-            <Button icon="pi pi-pencil" class="mr-2" @click="editTag(slotProps.data)"/>
-            <Button icon="pi pi-trash" severity="danger" @click="confirmDeleteTag(slotProps.data)"/>
-          </template>
-        </Column>
-      </DataTable>
+        <DataTable :value="tags" dataKey="id">
+            <Column field="name" header="Name" sortable></Column>
+            <Column field="description" header="Description" sortable></Column>
+            <Column>
+                <template #body="slotProps">
+                    <Button icon="pi pi-pencil" class="mr-2" @click="editTag(slotProps.data)"/>
+                    <Button icon="pi pi-trash" severity="danger" @click="confirmDeleteTag(slotProps.data)"/>
+                </template>
+            </Column>
+        </DataTable>
     </div>
 
     <Dialog v-model:visible="tagDialog" header="Tag Details" :modal="true">

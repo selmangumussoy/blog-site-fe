@@ -1,11 +1,22 @@
 export const TagService = {
     async getTags() {
-        const response = await fetch('/api/tags');
-        return response.json();
+        const response = await fetch("http://localhost:8080/tags", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch tags");
+        }
+
+        return await response.json();
     },
 
+
     async createTag(tag) {
-        const response = await fetch('/api/tags', {
+        const response = await fetch('http://localhost:8080/tags', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -37,7 +48,7 @@ export const TagService = {
     },
 
     async deleteTag(id) {
-        const response = await fetch(`/api/tags/${id}`, {
+        const response = await fetch(`http://localhost:8080/tags/${id}`, {
             method: 'DELETE',
         });
 
