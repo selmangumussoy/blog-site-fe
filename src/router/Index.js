@@ -105,6 +105,11 @@ const router = createRouter({
                     component: () => import('@/views/pages/Blog.vue')
                 },
                 {
+                    path: '/pages/excerpt',
+                    name: 'excerpt',
+                    component: ()=> import('@/views/pages/Excerpt.vue')
+                },
+                {
                     path: '/pages/tag',
                     name: 'tag',
                     component: ()=> import('@/views/pages/Tag.vue')
@@ -130,6 +135,11 @@ const router = createRouter({
             path: '/auth/login',
             name: 'login',
             component: () => import('@/views/pages/auth/Login.vue')
+        },
+        {
+            path: '/auth/signup',
+            name: 'signup',
+            component: () => import('@/views/pages/auth/SignUp.vue')
         },
         {
             path: '/auth/access',
