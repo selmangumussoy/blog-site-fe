@@ -38,27 +38,32 @@ const model = ref([
                 icon: 'pi pi-fw pi-globe',
                 to: '/landing'
             },
-            {
-                label: 'Auth',
-                icon: 'pi pi-fw pi-user',
-                items: [
-                    {
-                        label: 'Login',
-                        icon: 'pi pi-fw pi-sign-in',
-                        to: '/auth/login'
-                    },
-                    {
-                        label: 'Error',
-                        icon: 'pi pi-fw pi-times-circle',
-                        to: '/auth/error'
-                    },
-                    {
-                        label: 'Access Denied',
-                        icon: 'pi pi-fw pi-lock',
-                        to: '/auth/access'
-                    }
-                ]
-            },
+            // {
+            //     label: 'Auth',
+            //     icon: 'pi pi-fw pi-user',
+            //     items: [
+            //         {
+            //             label: 'Login',
+            //             icon: 'pi pi-fw pi-sign-in',
+            //             to: '/auth/login'
+            //         },
+            //         {
+            //             label: 'SignUp',
+            //             icon: 'pi pi-fw pi-sign-up',
+            //             to: '/auth/signup'
+            //         },
+            //         {
+            //             label: 'Error',
+            //             icon: 'pi pi-fw pi-times-circle',
+            //             to: '/auth/error'
+            //         },
+            //         {
+            //             label: 'Access Denied',
+            //             icon: 'pi pi-fw pi-lock',
+            //             to: '/auth/access'
+            //         }
+            //     ]
+            // },
             {
                 label: 'Crud',
                 icon: 'pi pi-fw pi-pencil',
@@ -68,6 +73,11 @@ const model = ref([
                 label: 'Blog',
                 icon: 'pi pi-fw pi-pencil',
                 to: '/pages/blog'
+            },
+            {
+                label: 'Excerpt',
+                icon: 'pi pi-fw pi-pencil',
+                to: '/pages/excerpt'
             },
             {
                 label: 'Tag',

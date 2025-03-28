@@ -70,10 +70,7 @@ const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
                         <i class="pi pi-inbox"></i>
                         <span>Messages</span>
                     </button>
-                    <button type="button" class="layout-topbar-action">
-                        <i class="pi pi-user"></i>
-                        <span>Profile</span>
-                    </button>
+                    <Button label="Sign In" class="w-full" as="router-link" to="/auth/login"></Button>
                 </div>
             </div>
         </div>
