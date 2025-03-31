@@ -13,19 +13,19 @@ export const AuthService = {
             throw new Error('Login failed');
         }
 
-        // Yanıtın JSON olup olmadığını kontrol et
-        const textResponse = await response.text();  // Yanıtı metin olarak al
-        if (!textResponse) {
-            throw new Error('Empty response from server');
+        // Yanıtı doğrudan JSON olarak alalım
+        const data = await response.json(); // JSON olarak veriyi alıyoruz
+
+        if (!data || !data.data || !data.data.token) {
+            throw new Error('Invalid response from server or token missing');
         }
 
-        // Geçerli JSON dönüştürme
-        try {
-            return JSON.parse(textResponse);  // JSON'a dönüştürmeye çalış
-        } catch (e) {
-            throw new Error('Invalid JSON response');
-        }
-    },
+        // Token'ı localStorage'a kaydediyoruz
+        localStorage.setItem('jwtToken', data.data.token);
+
+        return data;
+    }
+    ,
 
 
 

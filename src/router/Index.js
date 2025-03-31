@@ -8,10 +8,20 @@ const router = createRouter({
             path: '/',
             component: AppLayout,
             children: [
+                // {
+                //     path: '/',
+                //     name: 'dashboard',
+                //     component: () => import('@/views/Dashboard.vue')
+                // },
                 {
                     path: '/',
-                    name: 'dashboard',
-                    component: () => import('@/views/Dashboard.vue')
+                    name: 'excerptwidget',
+                    component: () => import('@/views/ExcerptWidget.vue')
+                },
+                {
+                    path: '/',
+                    name: 'team',
+                    component: () => import('@/views/Team.vue')
                 },
                 {
                     path: '/uikit/formlayout',

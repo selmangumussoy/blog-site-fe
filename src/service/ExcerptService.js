@@ -1,4 +1,5 @@
 export const ExcerptService = {
+
     async getExcerpts() {
         const response = await fetch("http://localhost:8080/excerpts", {
             method: "GET",
@@ -8,52 +9,59 @@ export const ExcerptService = {
         });
 
         if (!response.ok) {
-            throw new Error("Failed to fetch tags");
+            throw new Error("Failed to fetch excerpts");
         }
 
         return await response.json();
     },
 
-
-    async createExcerpt(tag) {
+    async createExcerpt(excerpt) {
+        const token = localStorage.getItem("jwtToken");
         const response = await fetch('http://localhost:8080/excerpts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`  // Token'ı header'a ekliyoruz
             },
-            body: JSON.stringify(tag),
+            body: JSON.stringify(excerpt),
         });
 
         if (!response.ok) {
-            throw new Error('Failed to create tag');
+            throw new Error('Failed to create excerpt');
         }
 
         return response.json();
     },
 
-    async updateExcerpt(tag) {
-        const response = await fetch(`http://localhost:8080/excerpts/${tag.id}`, {
+    async updateExcerpt(excerpt) {
+        const token = localStorage.getItem("jwtToken");
+        const response = await fetch(`http://localhost:8080/excerpts/${excerpt.id}`, {
             method: 'PUT',
             headers: {
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(tag),
+            body: JSON.stringify(excerpt),
         });
 
         if (!response.ok) {
-            throw new Error('Failed to update tag');
+            throw new Error('Failed to update excerpt');
         }
 
         return response.json();
     },
 
     async deleteExcerpt(id) {
+        const token = localStorage.getItem("jwtToken");
         const response = await fetch(`http://localhost:8080/excerpts/${id}`, {
             method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
         });
 
         if (!response.ok) {
-            throw new Error('Failed to delete tag');
+            throw new Error('Failed to delete excerpt');
         }
     }
 };

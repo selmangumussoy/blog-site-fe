@@ -19,8 +19,7 @@ const handleLogin = async () => {
 
     try {
         const token = await AuthService.login(loginRequest.value);
-        localStorage.setItem('auth_token', token);
-        window.location.href = '/uikit/panel';
+        window.location.href = '/';
     } catch (error) {
         console.error('Giriş yapılırken bir hata oluştu:', error);
         alert(error.message); // Hata mesajını kullanıcıya gösteriyoruz
@@ -61,7 +60,7 @@ const handleLogin = async () => {
                         <div class="flex items-center ">
                             <div class="flex items-center">
                                 <span class="font-medium no-underline ml-2 mr-1.5 text-right cursor-pointer text-primary">Hesabınız Yok Mu?</span>
-                                <label for="Sign Up">Kaydol</label>
+                                <router-link to="/auth/signup">Kaydol</router-link>
                             </div>
                         </div>
                     </div>
