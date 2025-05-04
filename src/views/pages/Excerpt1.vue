@@ -7,6 +7,9 @@ const excerpts = ref([]);
 const availableTags = ref([]);
 const options = ref(['list', 'grid']);
 const layout = ref('list');
+const selectedExcerpt = ref(null);
+const dialogVisible = ref(false);
+
 
 onMounted(() => {
     ExcerptService.getExcerpts().then((data) => {
@@ -28,18 +31,13 @@ onMounted(() => {
     });
 });
 
-function getSeverity(excerpt) {
-    switch (excerpt.sourceTitle) {
-        case 'INSTOCK':
-            return 'success';
-        case 'LOWSTOCK':
-            return 'warning';
-        case 'OUTOFSTOCK':
-            return 'danger';
-        default:
-            return null;
-    }
+
+function openDialog(excerpt) {
+    selectedExcerpt.value = excerpt;
+    dialogVisible.value = true;
 }
+
+
 </script>
 
 <template>
@@ -59,11 +57,11 @@ function getSeverity(excerpt) {
 
                 <template #list="slotProps">
                     <div class="flex flex-col">
-                        <div v-for="(item, index) in slotProps.items" :key="index">
+                        <div v-for="(item, index) in slotProps.items" :key="index " @click="openDialog(item)" >
                             <div class="flex flex-col sm:flex-row sm:items-center p-6 gap-4" :class="{ 'border-t border-surface': index !== 0 }">
                                 <div class="md:w-40 relative">
                                     <img class="block xl:block mx-auto rounded w-full" :src="'data:image/jpeg;base64,' + item.image" alt="Excerpt Photo" />
-<!--                                    <Tag :value="item.sourceTitle" :severity="getSeverity(item)" class="absolute dark:!bg-surface-900" style="left: 4px; top: 4px"></Tag>-->
+                                    <!--                                    <Tag :value="item.sourceTitle" :severity="getSeverity(item)" class="absolute dark:!bg-surface-900" style="left: 4px; top: 4px"></Tag>-->
                                 </div>
                                 <div class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-6">
                                     <div class="flex flex-row md:flex-col justify-between items-start gap-2">
@@ -97,7 +95,7 @@ function getSeverity(excerpt) {
                                 <div class="bg-surface-50 flex justify-center rounded p-4">
                                     <div class="relative mx-auto">
                                         <img class="rounded w-full" :src="'data:image/jpeg;base64,' + item.image" alt="Excerpt Photo" style="max-width: 300px" />
-<!--                                        <Tag :value="item.publishDate" :severity="getSeverity(item)" class="absolute dark:!bg-surface-900" style="left: 4px; top: 4px"></Tag>-->
+                                        <!--                                        <Tag :value="item.publishDate" :severity="getSeverity(item)" class="absolute dark:!bg-surface-900" style="left: 4px; top: 4px"></Tag>-->
                                     </div>
                                 </div>
                                 <div class="pt-6">
@@ -127,28 +125,55 @@ function getSeverity(excerpt) {
             </DataView>
         </div>
 
-<!--        <div class="flex flex-col lg:flex-row gap-8">-->
-<!--            <div class="lg:w-2/3">-->
-<!--                <div class="card">-->
-<!--                    <div class="font-semibold text-xl mb-4">PickList</div>-->
-<!--                    <PickList v-model="picklistProducts" breakpoint="1400px" dataKey="id">-->
-<!--                        <template #option="{ option }">-->
-<!--                            {{ option.name }}-->
-<!--                        </template>-->
-<!--                    </PickList>-->
-<!--                </div>-->
-<!--            </div>-->
+        <!-- Excerpt Dialog -->
+        <Dialog v-model:visible="dialogVisible" :modal="true" :style="{ width: '50vw' }">
+            <template #header>
+                <h2 class="text-2xl font-semibold text-center">{{ selectedExcerpt?.sourceTitle || 'Alıntı' }}</h2>
+            </template>
 
-<!--            <div class="lg:w-1/3">-->
-<!--                <div class="card">-->
-<!--                    <div class="font-semibold text-xl mb-4">OrderList</div>-->
-<!--                    <OrderList v-model="orderlistProducts" breakpoint="1400px" dataKey="id" pt:pcList:root="w-full">-->
-<!--                        <template #option="{ option }">-->
-<!--                            {{ option.name }}-->
-<!--                        </template>-->
-<!--                    </OrderList>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+            <div v-if="selectedExcerpt">
+                <!-- Resim ve İçerik Aynı Çerçevede -->
+                <div class="border rounded-lg shadow-md p-4 bg-white">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="w-full md:w-1/3 flex justify-center">
+                            <!-- <img class="block xl:block mx-auto rounded w-full" :src="'data:image/jpeg;base64,' + item.image" alt="Excerpt Photo" /> -->
+                            <img class="block xl:block mx-auto rounded w-full" src="/demo/images/logo.svg" alt="Placeholder Image" />
+                        </div>
+                        <div class="w-full md:w-2/3">
+                            <p class="text-gray-600 whitespace-pre-line">{{ selectedExcerpt.content || 'İçerik yok' }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Diğer Bilgiler -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                    <div class="border rounded-lg p-3 bg-gray-50">
+                        <span class="font-semibold">📖 Kaçıncı Sayfa:</span>
+                        <p class="text-gray-700">{{ selectedExcerpt.page || 'Bilinmiyor' }}</p>
+                    </div>
+                    <div class="border rounded-lg p-3 bg-gray-50">
+                        <span class="font-semibold">📅 Yayınlanma Tarihi:</span>
+                        <p class="text-gray-700">{{ selectedExcerpt.publishDate || 'Bilinmiyor' }}</p>
+                    </div>
+                    <div class="border rounded-lg p-3 bg-gray-50 col-span-2">
+                        <span class="font-semibold">ℹ️ Açıklama:</span>
+                        <p class="text-gray-700">{{ selectedExcerpt.description || 'Açıklama yok' }}</p>
+                    </div>
+                    <div class="border rounded-lg p-3 bg-gray-50">
+                        <span class="font-semibold">🏢 Yayınevi:</span>
+                        <p class="text-gray-700">{{ selectedExcerpt.publisher || 'Bilinmiyor' }}</p>
+                    </div>
+                    <div class="border rounded-lg p-3 bg-gray-50">
+                        <span class="font-semibold">🏷️ Etiketler:</span>
+                        <p class="text-gray-700">
+                            <span v-if="selectedExcerpt.tagId.length > 0">
+                                {{ selectedExcerpt.tagId.map(tag => tag.name).join(', ') }}
+                            </span>
+                            <span v-else>Etiket yok</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </Dialog>
     </div>
 </template>

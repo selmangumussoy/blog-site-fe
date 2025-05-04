@@ -54,4 +54,9 @@ export const AuthService = {
         }
     },
 
+    getToken() {
+        return localStorage.getItem('jwtToken');
+    },
+
+
 };

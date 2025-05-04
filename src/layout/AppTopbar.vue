@@ -14,6 +14,12 @@ const logout = () => {
     isAuthenticated.value = false;
     router.push('/');
 };
+
+
+const goToProfile = () => {
+    router.push('/profile');
+};
+
 </script>
 
 <template>
@@ -71,6 +77,15 @@ const logout = () => {
 
                     <!-- Eğer giriş yapılmamışsa giriş butonunu göster -->
                     <Button v-if=" !isAuthenticated" label="Sign In" class="w-full" as="router-link" to="/auth/login"></Button>
+
+                    <!-- Giriş yapılmışsa profil ikonunu göster -->
+                    <button
+                        v-if="isAuthenticated"
+                        class="layout-topbar-action"
+                        @click="goToProfile"
+                    >
+                        <i class="pi pi-user"></i>
+                    </button>
                 </div>
             </div>
         </div>
