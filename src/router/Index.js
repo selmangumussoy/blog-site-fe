@@ -19,9 +19,9 @@ const router = createRouter({
                     component: () => import('@/views/ExcerptWidget.vue')
                 },
                 {
-                    path: '/',
-                    name: 'team',
-                    component: () => import('@/views/Team.vue')
+                    path: '/profile',
+                    name: 'profile',
+                    component: () => import('@/views/pages/Profile.vue')
                 },
                 {
                     path: '/uikit/formlayout',
@@ -108,6 +108,11 @@ const router = createRouter({
                     path: '/pages/crud',
                     name: 'crud',
                     component: () => import('@/views/pages/Crud.vue')
+                },
+                {
+                    path: '/pages/team',
+                    name: 'team',
+                    component: () => import('@/views/pages/Team.vue')
                 },
                 {
                     path: '/pages/blog',
